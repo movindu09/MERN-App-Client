@@ -3,7 +3,8 @@ import { Button, Form, Input, Typography } from 'antd';
 import { LockOutlined, MailOutlined, UserOutlined } from '@ant-design/icons';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { successNotification, errorNotification } from '../components/Message';
+import Nav from '../components/Nav';
+import { useNotification } from '../NotificationContext';
 
 
 const { Text, Title } = Typography;
@@ -29,6 +30,7 @@ const styles = {
 const Signup = () => {
 	const [form] = Form.useForm();
 	const navigate = useNavigate();
+	const { successNotification, errorNotification } = useNotification();
 
 	const onFinish = async (values) => {
 		console.log('Success:', values);
@@ -71,73 +73,82 @@ const Signup = () => {
 	};
 
 	return (
-		<section style={styles.section}>
-			<div style={styles.container}>
-				<div style={styles.header}>
-					<Title>Sign up</Title>
-				</div>
-				<Form
-					form={form}
-					name="normal_signup"
-					onFinish={onFinish}
-					onFinishFailed={onFinishFailed}
-					layout="vertical"
-					requiredMark="optional"
-				>
-					<Form.Item
-						name="name"
-						rules={[
-							{
-								message: 'Please input your Name!',
-							},
-						]}
+		<div>
+			<Nav showLogin={true} showHome={true} />
+			<section style={styles.section}>
+				<div style={styles.container}>
+					<div style={styles.header}>
+						<Title>Sign up</Title>
+					</div>
+					<Form
+						form={form}
+						name="normal_signup"
+						onFinish={onFinish}
+						onFinishFailed={onFinishFailed}
+						layout="vertical"
+						requiredMark="optional"
 					>
-						<Input prefix={<UserOutlined />} placeholder="Name" />
-					</Form.Item>
-					<Form.Item
-						name="email"
-						rules={[
-							{
-								type: 'email',
+						<Form.Item
+							name="name"
+							rules={[
+								{
+									message: 'Please input your Name!',
+								},
+							]}
+						>
+							<Input
+								prefix={<UserOutlined />}
+								placeholder="Name"
+							/>
+						</Form.Item>
+						<Form.Item
+							name="email"
+							rules={[
+								{
+									type: 'email',
 
-								message: 'Please input your Email!',
-							},
-						]}
-					>
-						<Input prefix={<MailOutlined />} placeholder="Email" />
-					</Form.Item>
-					<Form.Item
-						name="password"
-						extra="Password needs to be at least 8 characters."
-						rules={[
-							{
-								message: 'Please input your Password!',
-							},
-							{
-								min: 8,
-								message:
-									'Password must be at least 8 characters!',
-							},
-						]}
-					>
-						<Input.Password
-							prefix={<LockOutlined />}
-							type="password"
-							placeholder="Password"
-						/>
-					</Form.Item>
-					<Form.Item style={{ marginBottom: '0px' }}>
-						<Button block type="primary" htmlType="submit">
-							Sign up
-						</Button>
-						<div style={styles.signup}>
-							<Text>Already have an account?</Text>{' '}
-							<Link to="/login">Sign in</Link>
-						</div>
-					</Form.Item>
-				</Form>
-			</div>
-		</section>
+									message: 'Please input your Email!',
+								},
+							]}
+						>
+							<Input
+								prefix={<MailOutlined />}
+								placeholder="Email"
+							/>
+						</Form.Item>
+						<Form.Item
+							name="password"
+							extra="Password needs to be at least 8 characters."
+							rules={[
+								{
+									message: 'Please input your Password!',
+								},
+								{
+									min: 8,
+									message:
+										'Password must be at least 8 characters!',
+								},
+							]}
+						>
+							<Input.Password
+								prefix={<LockOutlined />}
+								type="password"
+								placeholder="Password"
+							/>
+						</Form.Item>
+						<Form.Item style={{ marginBottom: '0px' }}>
+							<Button block type="primary" htmlType="submit">
+								Sign up
+							</Button>
+							<div style={styles.signup}>
+								<Text>Already have an account?</Text>{' '}
+								<Link to="/login">Sign in</Link>
+							</div>
+						</Form.Item>
+					</Form>
+				</div>
+			</section>
+		</div>
 	);
 };
 

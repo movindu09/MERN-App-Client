@@ -14,7 +14,7 @@ const getUser = () => {
 
 const ProtectedRoutes = () => {
 	const isAuth = getUser() ;
-	console.log(isAuth)
+	// console.log(isAuth)
 	return isAuth ? <Outlet /> : <Navigate to="/login" />;
 };
 
